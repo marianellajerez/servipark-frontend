@@ -1,11 +1,15 @@
-<div *ngIf="!(ticket$ | async) && !errorMensaje" class="card loading-card">
+<div *ngIf="!ticket && !errorMensaje" class="card loading-card">
   <p>Buscando ticket...</p>
 </div>
 
-<div *ngIf="ticket$ | async as ticket" class="ticket-detalle-container">
+<div *ngIf="ticket" class="ticket-detalle-container">
   <h2 class="detalle-titulo">Detalles del Ticket Activo</h2>
   
-  <app-ticket-recibo [ticket]="ticket"></app-ticket-recibo>
+  <app-ticket-recibo 
+    [ticket]="ticket"
+    [preliminaryMinutes]="preliminaryMinutes"
+    [preliminaryCost]="preliminaryCost">
+  </app-ticket-recibo>
 
   <a routerLink="/dashboard/ingresar-vehiculo" class="btn btn-secondary">
     Registrar Otro Ingreso

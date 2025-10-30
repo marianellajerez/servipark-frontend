@@ -11,8 +11,15 @@ export interface TipoVehiculo {
 export interface TicketIngreso {
   idTicket: number;
   fechaIngreso: string;
+  fechaSalida: string | null;
+  valorTotal: number | null;
+  idUsuario: number;
+  emailUsuario: string;
+  idVehiculo: number;
   placaVehiculo: string;
   tipoVehiculo: string;
+  idTarifa: number;
+  valorPorMinutoTarifa: number;
 }
 
 @Injectable({
