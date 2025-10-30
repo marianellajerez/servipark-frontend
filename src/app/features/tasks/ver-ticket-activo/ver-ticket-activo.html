@@ -1,6 +1,6 @@
 <div class="card">
   <h2>Consultar Ticket Activo por Placa</h2>
-
+  
   <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
     <div class="form-group">
       <label for="placa">Placa del Vehículo</label>
@@ -13,19 +13,10 @@
           maxlength="6"
           minlength="6">
       </div>
-      </div>
+    </div>
 
     <button type="submit" class="btn btn-primary btn-full-width" [disabled]="searchForm.invalid">
       Buscar Ticket
     </button>
   </form>
-</div>
-
-<div *ngIf="errorMensaje" class="response-message error">
-  {{ errorMensaje }}
-</div>
-
-<div *ngIf="ticketEncontrado" class="ticket-encontrado-container">
-  <h3 class="exito-titulo">Ticket Activo Encontrado</h3>
-  <app-ticket-recibo [ticket]="ticketEncontrado"></app-ticket-recibo>
 </div>
