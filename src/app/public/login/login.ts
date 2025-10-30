@@ -13,7 +13,7 @@ import { AuthService } from '../../core/services/auth';
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-export class LoginComponent {
+export class Login {
   
   loginForm: FormGroup;
   errorMessage: string = '';

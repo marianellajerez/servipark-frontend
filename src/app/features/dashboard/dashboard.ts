@@ -18,7 +18,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
-export class DashboardComponent implements OnInit {
+export class Dashboard implements OnInit {
 
   userName: string | null = null;
   userRole: string | null = null;

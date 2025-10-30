@@ -20,8 +20,8 @@ export class AuthService {
           const decodedToken: any = jwtDecode(response.token);
 
           const role = decodedToken.role;
-          const user = decodedToken.sub;
-
+          const user = decodedToken.name || decodedToken.sub;
+          
           this.saveSession(response.token, role, user);
 
           this.router.navigate(['/dashboard']); 
