@@ -1,0 +1,60 @@
+/* 1. Contenedor de la Placa */
+.plate-input-wrapper {
+  background-color: #FBBF24; /* Amarillo */
+  border: 3px solid #1F2937; /* Gris oscuro */
+  border-radius: var(--border-radius);
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) inset; 
+}
+
+/* 2. El <input> de la Placa */
+.plate-input-wrapper input {
+  width: 100%;
+  max-width: 200px; 
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2.5rem; /* 40px */
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 6px;     
+  color: var(--color-text);
+  padding: 10px 0;
+}
+
+/* 3. Placeholder (AAA123) */
+.plate-input-wrapper input::placeholder {
+  color: #9A7222;
+  opacity: 0.6;
+  font-weight: 400;
+}
+
+/* 4. Mensajes de respuesta de la API */
+.response-message {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  text-align: center;
+}
+.response-message.exito {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+.response-message.error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+}
+
+/* 5. Mensajes de validación */
+.error-validation {
+  color: var(--color-danger);
+  font-size: 14px;
+  margin-top: 6px;
+}

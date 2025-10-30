@@ -4,7 +4,8 @@ import { Dashboard } from './features/dashboard/dashboard';
 
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
-import { RegistrarEntrada } from './features/tasks/registrar-entrada/registrar-entrada';
+
+import { IngresarVehiculo } from './features/tasks/ingresar-vehiculo/ingresar-vehiculo'; 
 import { GestionarUsuarios } from './features/tasks/gestionar-usuarios/gestionar-usuarios';
 
 export const routes: Routes = [
@@ -17,8 +18,8 @@ export const routes: Routes = [
     
     children: [
       {
-        path: 'registrar-entrada',
-        component: RegistrarEntrada
+        path: 'ingresar-vehiculo',
+        component: IngresarVehiculo
       },
       {
         path: 'gestionar-usuarios',
@@ -30,7 +31,7 @@ export const routes: Routes = [
       },
       { 
         path: '', 
-        redirectTo: 'registrar-entrada', 
+        redirectTo: 'ingresar-vehiculo',
         pathMatch: 'full' 
       }
     ]

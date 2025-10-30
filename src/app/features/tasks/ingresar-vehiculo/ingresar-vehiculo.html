@@ -1,1 +1,54 @@
-<p>ingresar-vehiculo works!</p>
+<div class="card">
+  <h2>Registrar Entrada de Vehículo</h2>
+  
+  <form [formGroup]="ingresoForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="placa">Placa del Vehículo</label>
+      <div class="plate-input-wrapper">
+        <input 
+          id="placa" 
+          type="text" 
+          formControlName="placa"
+          placeholder="AAA123"
+          maxlength="6"
+          minlength="6">
+      </div>
+      
+      <div *ngIf="ingresoForm.get('placa')?.touched && ingresoForm.get('placa')?.hasError('required')" class="error-validation">
+        La placa es obligatoria.
+      </div>
+      <div *ngIf="ingresoForm.get('placa')?.touched && ingresoForm.get('placa')?.hasError('minlength')" class="error-validation">
+        La placa debe tener 6 caracteres.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="idTipoVehiculo">Tipo de Vehículo</label>
+      <select id="idTipoVehiculo" formControlName="idTipoVehiculo" class="form-control">
+        <option [ngValue]="null" disabled>Seleccione un tipo...</option>
+        
+        <option *ngFor="let tipo of (tiposVehiculo$ | async)" [value]="tipo.idTipoVehiculo">
+          {{ tipo.nombre }}
+        </option>
+        </select>
+      
+      <div *ngIf="ingresoForm.get('idTipoVehiculo')?.touched && ingresoForm.get('idTipoVehiculo')?.hasError('required')" class="error-validation">
+        Debe seleccionar un tipo de vehículo.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-full-width">
+      Generar Ticket de Entrada
+    </button>
+
+  </form>
+
+  <div *ngIf="mensaje" 
+       class="response-message"
+       [class.exito]="mensajeTipo === 'exito'"
+       [class.error]="mensajeTipo === 'error'">
+    {{ mensaje }}
+  </div>
+
+</div>
