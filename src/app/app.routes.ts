@@ -9,6 +9,8 @@ import { IngresarVehiculo } from './features/tasks/ingresar-vehiculo/ingresar-ve
 import { GestionarUsuarios } from './features/tasks/gestionar-usuarios/gestionar-usuarios';
 import { VerTicketActivo } from './features/tasks/ver-ticket-activo/ver-ticket-activo';
 import { TicketDetalle } from './features/tasks/ticket-detalle/ticket-detalle';
+import { CobrarParqueo } from './features/tasks/cobrar-parqueo/cobrar-parqueo';
+import { TicketSalidaRecibo } from './features/tasks/ticket-salida-recibo/ticket-salida-recibo';
 
 export const routes: Routes = [
 
@@ -26,6 +28,14 @@ export const routes: Routes = [
       {
         path: 'ver-ticket-activo',
         component: VerTicketActivo
+      },
+      {
+        path: 'cobrar-parqueo',
+        component: CobrarParqueo
+      },
+      {
+        path: 'recibo-salida',
+        component: TicketSalidaRecibo
       },
       {
         path: 'ticket/:placa',

@@ -1,0 +1,12 @@
+<div *ngIf="ticket" class="ticket-detalle-container">
+  <h2 class="detalle-titulo">Pago Registrado Exitosamente</h2>
+
+  <app-ticket-recibo [ticket]="ticket"></app-ticket-recibo>
+
+  <a routerLink="/dashboard/cobrar-parqueo" class="btn btn-primary btn-full-width">
+    Cobrar Otro Ticket
+  </a>
+  <a routerLink="/dashboard/ingresar-vehiculo" class="btn btn-secondary btn-full-width">
+    Registrar Ingreso
+  </a>
+</div>

@@ -1,7 +1,7 @@
 <div class="ticket-wrapper">
   <div class="ticket-header">
     <h2>ServiPark</h2>
-    <p>Comprobante de Ingreso</p>
+    <p>{{ ticket.fechaSalida ? 'Recibo de Pago' : 'Comprobante de Ingreso' }}</p>
   </div>
 
   <div class="ticket-body">
@@ -21,14 +21,30 @@
       <strong>{{ ticket.fechaIngreso | date:'h:mm a - dd/MM/yyyy' }}</strong>
     </div>
 
+    <ng-container *ngIf="ticket.fechaSalida">
+      <div class="ticket-item">
+        <span>Fecha de Salida</span>
+        <strong>{{ ticket.fechaSalida | date:'h:mm a - dd/MM/yyyy' }}</strong>
+      </div>
+
+      <div class="ticket-item">
+        <span>Minutos Transcurridos</span>
+        <strong>{{ minutosTranscurridos }} min</strong>
+      </div>
+    </ng-container>
     <div class="ticket-item tarifa">
       <span>Tarifa (Minuto)</span>
       <strong>{{ ticket.valorPorMinutoTarifa | currency:'COP':'$' }}</strong>
     </div>
 
+    <div *ngIf="ticket.valorTotal" class="ticket-item total">
+      <span>VALOR TOTAL</span>
+      <strong>{{ ticket.valorTotal | currency:'COP':'$' }}</strong>
+    </div>
+
   </div>
 
   <div class="ticket-footer">
-    <p>Conserve este ticket</p>
-    </div>
+    <p>{{ ticket.fechaSalida ? '¡Gracias por su visita!' : 'Conserve este ticket' }}</p>
+  </div>
 </div>

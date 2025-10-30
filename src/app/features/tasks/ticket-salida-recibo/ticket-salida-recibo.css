@@ -1,0 +1,18 @@
+.ticket-detalle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.detalle-titulo {
+  color: var(--color-text);
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+}
+.ticket-detalle-container .btn {
+  margin-top: 12px;
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+}

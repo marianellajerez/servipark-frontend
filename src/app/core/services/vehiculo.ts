@@ -55,7 +55,6 @@ export class Vehiculo {
    * @param placa La placa del vehículo
    */
   registrarSalida(placa: string): Observable<TicketIngreso> {
-    // El body es { "placa": "..." }
     return this.http.put<TicketIngreso>(`${this.apiUrl}/tickets/salida`, { placa });
   }
 }
