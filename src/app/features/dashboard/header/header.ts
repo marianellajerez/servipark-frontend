@@ -20,8 +20,13 @@ export class Header implements OnInit {
   constructor(private auth: Auth) {}
 
   ngOnInit(): void {
-    this.userName = this.auth.getCurrentUser();
-    this.userRole = this.auth.getRole();
+    const decodedToken: any = this.auth.getDecodedToken(); 
+    
+    if (decodedToken) {
+      this.userName = decodedToken.name;
+      this.userEmail = decodedToken.sub;
+      this.userRole = decodedToken.role;
+    }
   }
 
   toggleMenu(): void {

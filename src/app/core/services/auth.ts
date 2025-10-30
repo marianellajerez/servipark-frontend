@@ -53,4 +53,22 @@ export class Auth {
   getCurrentUser(): string | null {
     return localStorage.getItem('currentUser');
   }
+
+  getToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
+  getDecodedToken(): any | null {
+    const token = this.getToken();
+    if (token) {
+      try {
+        return jwtDecode(token); 
+      } catch (error) {
+        console.error("Error decodificando el token:", error);
+        this.logout(); 
+        return null;
+      }
+    }
+    return null;
+  }
 }
