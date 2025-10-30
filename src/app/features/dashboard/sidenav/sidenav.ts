@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../core/services/auth';
+import { Auth } from '../../../core/services/auth';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [ CommonModule, RouterLink ],
+  imports: [ CommonModule, RouterLink, RouterLinkActive ],
   templateUrl: './sidenav.html',
   styleUrls: ['./sidenav.css']
 })
-export class SidenavComponent implements OnInit {
+export class Sidenav implements OnInit {
 
   userRole: string | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private auth: Auth) {}
 
   ngOnInit(): void {
-    this.userRole = this.authService.getRole();
+    this.userRole = this.auth.getRole();
   }
 
   onLogout(): void {
-    this.authService.logout();
+    this.auth.logout();
   }
 }

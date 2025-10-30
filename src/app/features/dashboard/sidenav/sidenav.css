@@ -1,0 +1,77 @@
+:host {
+  /* Posición y Tamaño (Requerimientos) */
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20%; /* Ancho fijo del 20% */
+  z-index: 50;
+
+  /* Estilo (Grises y Verdes) */
+  /* Usamos un gris muy oscuro para el fondo */
+  background-color: var(--color-text); 
+  padding: 24px;
+
+  /* Organización interna */
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav-header {
+  margin-bottom: 24px;
+}
+.sidenav-header h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary); /* ¡Logo en verde! */
+  margin: 0;
+}
+
+/* Lista de Navegación */
+nav {
+  flex-grow: 1; /* Ocupa el espacio disponible */
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li a {
+  display: block;
+  padding: 14px 18px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #FFF; /* Texto blanco */
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  transition: background-color 0.2s ease;
+}
+
+nav li a:hover {
+  background-color: var(--color-primary-hover); /* Verde oscuro al pasar */
+}
+/* (Opcional) Estilo para el link activo (la página actual) */
+nav li a.active {
+  background-color: var(--color-primary);
+}
+
+/* Botón de Logout (al final) */
+.logout-button-wrapper {
+  margin-top: auto; /* Empuja el botón al fondo */
+}
+
+/* Usamos .btn-secondary pero lo adaptamos al fondo oscuro */
+.btn-logout {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-border);
+}
+.btn-logout:hover {
+  background-color: var(--color-danger); /* Rojo al pasar */
+  border-color: var(--color-danger);
+  color: #FFF;
+}

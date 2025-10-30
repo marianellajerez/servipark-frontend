@@ -1,17 +1,18 @@
-.dashboard-header {
-  background-color: #f4f4f4;
-  padding: 15px 25px;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 20px;
+/* src/app/features/dashboard/dashboard.component.css */
+
+.main-content-wrapper {
+  /* Apartamos el contenido para dar espacio al Sidenav (20%) */
+  margin-left: 20%;
+
+  /* Ocupamos el 80% restante */
+  width: 80%; 
+
+  /* Fondo gris claro para el área de contenido */
+  background-color: var(--color-bg);
+  min-height: 100vh; /* Asegura que ocupe toda la altura */
 }
 
-.dashboard-header h2 {
-  margin: 0;
-  font-weight: 300;
-  color: #333;
-}
-
-.dashboard-header h2 strong {
-  font-weight: 600;
-  color: #0056b3;
+.page-content {
+  /* Padding para que el contenido no pegue con los bordes */
+  padding: 24px;
 }

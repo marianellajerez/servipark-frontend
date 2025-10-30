@@ -1,20 +1,27 @@
-<nav class="sidenav">
+<div class="sidenav-header">
   <h3>ServiPark</h3>
+</div>
+
+<nav>
   <ul>
     <li>
-      <a routerLink="registrar-entrada">Registrar Entrada/Salida</a>
+      <a routerLink="registrar-entrada" routerLinkActive="active">Registrar Entrada/Salida</a>
     </li>
     <li>
-      <a routerLink="ver-historial">Ver Historial</a>
+      <a routerLink="ver-historial" routerLinkActive="active">Ver Historial</a>
     </li>
 
     <li *ngIf="userRole === 'ADMINISTRADOR'">
-      <a routerLink="gestionar-usuarios">Gestionar Usuarios</a>
+      <a routerLink="gestionar-usuarios" routerLinkActive="active">Gestionar Usuarios</a>
     </li>
     <li *ngIf="userRole === 'ADMINISTRADOR'">
-      <a routerLink="reportes">Reportes Avanzados</a>
+      <a routerLink="reportes" routerLinkActive="active">Reportes Avanzados</a>
     </li>
   </ul>
-
-  <button (click)="onLogout()">Cerrar Sesión</button>
 </nav>
+
+<div class="logout-button-wrapper">
+  <button class="btn btn-logout" (click)="onLogout()">
+    Cerrar Sesión
+  </button>
+</div>

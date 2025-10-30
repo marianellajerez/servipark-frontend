@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'; 
-import { AuthService } from '../../core/services/auth';
+import { Auth } from '../../core/services/auth';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ export class Login {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private auth: Auth
   ) {
     this.loginForm = this.fb.group({
       correo: ['', [Validators.required, Validators.email]],
@@ -35,7 +35,7 @@ export class Login {
 
     this.errorMessage = '';
 
-    this.authService.login(this.loginForm.value).subscribe({
+    this.auth.login(this.loginForm.value).subscribe({
       next: () => {
         console.log('Login exitoso');
       },

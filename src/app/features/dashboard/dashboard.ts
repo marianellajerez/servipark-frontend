@@ -1,32 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Auth } from '../../core/services/auth';
-
-import { SidenavComponent } from './sidenav/sidenav';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router'; 
+import { Sidenav } from './sidenav/sidenav';
+import { Header } from './header/header';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
 
   imports: [ 
-    CommonModule,
-    SidenavComponent, 
-    RouterOutlet 
+    RouterOutlet,
+    Sidenav,
+    Header
   ],
 
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']
 })
-export class Dashboard implements OnInit {
-
-  userName: string | null = null;
-  userRole: string | null = null;
-
-  constructor(private auth: Auth) {}
-
-  ngOnInit(): void {
-    this.userName = this.auth.getCurrentUser();
-    this.userRole = this.auth.getRole();
-  }
+export class Dashboard {
 }
