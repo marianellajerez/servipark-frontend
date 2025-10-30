@@ -4,34 +4,45 @@
 
 <nav>
   <ul class="nav-list">
-    
+
     <li>
-      <a routerLink="ingresar-vehiculo" 
-         routerLinkActive="active" 
-         class="nav-link">
+      <a routerLink="ingresar-vehiculo" routerLinkActive="active" class="nav-link">
         Ingresar Vehículo
       </a>
     </li>
 
     <li>
-      <a routerLink="cobrar-parqueo" 
-         routerLinkActive="active" 
-         class="nav-link">
+      <a routerLink="cobrar-parqueo" routerLinkActive="active" class="nav-link">
         Cobrar Parqueo
       </a>
     </li>
 
+    <li>
+      <a routerLink="cobrar-parqueo" routerLinkActive="active" class="nav-link">
+        Cobrar Parqueo
+      </a>
+    </li>
+
+    <li>
+      <a routerLink="ver-ticket-activo" routerLinkActive="active" class="nav-link">
+        Ver Ticket Activo
+      </a>
+    </li>
+
     <ng-container *ngIf="userRole === 'ADMINISTRADOR'">
-      
+
       <li>
         <div class="accordion-item">
           <button class="accordion-header" (click)="toggleMenu('admin')">
             <span>Administrar</span>
-            <svg [class.rotated]="menuState['admin']" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+            <svg [class.rotated]="menuState['admin']" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+              fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z"
+                clip-rule="evenodd" />
             </svg>
           </button>
-          
+
           <ul class="accordion-content" [class.open]="menuState['admin']">
             <li><a routerLink="admin/tipos-vehiculo" routerLinkActive="active">Tipos de vehículo</a></li>
             <li><a routerLink="admin/tarifas" routerLinkActive="active">Tarifas</a></li>
@@ -46,7 +57,8 @@
         </a>
       </li>
 
-    </ng-container> <li *ngIf="userRole === 'CAJERO'">
+    </ng-container>
+    <li *ngIf="userRole === 'CAJERO'">
       <a routerLink="mi-historial" routerLinkActive="active" class="nav-link">
         Mi Historial de Cobros
       </a>

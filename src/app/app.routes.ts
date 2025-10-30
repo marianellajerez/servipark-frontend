@@ -7,6 +7,7 @@ import { roleGuard } from './core/guards/role-guard';
 
 import { IngresarVehiculo } from './features/tasks/ingresar-vehiculo/ingresar-vehiculo'; 
 import { GestionarUsuarios } from './features/tasks/gestionar-usuarios/gestionar-usuarios';
+import { VerTicketActivo } from './features/tasks/ver-ticket-activo/ver-ticket-activo';
 
 export const routes: Routes = [
   
@@ -20,6 +21,10 @@ export const routes: Routes = [
       {
         path: 'ingresar-vehiculo',
         component: IngresarVehiculo
+      },
+      { 
+        path: 'ver-ticket-activo',
+        component: VerTicketActivo
       },
       {
         path: 'gestionar-usuarios',

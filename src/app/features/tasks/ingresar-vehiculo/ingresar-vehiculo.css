@@ -58,3 +58,19 @@
   font-size: 14px;
   margin-top: 6px;
 }
+
+/* ... (CSS de la placa y mensajes) ... */
+
+.ticket-generado-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.exito-titulo {
+  color: var(--color-primary);
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+}

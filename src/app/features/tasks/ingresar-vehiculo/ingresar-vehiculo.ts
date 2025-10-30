@@ -1,26 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/features/tasks/ingresar-vehiculo/ingresar-vehiculo.component.ts
+
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Vehiculo, TipoVehiculo } from '../../../core/services/vehiculo';
+import { Vehiculo, TipoVehiculo, TicketIngreso } from '../../../core/services/vehiculo';
 import { Observable } from 'rxjs';
+
+import { TicketRecibo } from '../../../shared/components/ticket-recibo/ticket-recibo';
 
 @Component({
   selector: 'app-ingresar-vehiculo',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    TicketRecibo
   ],
   templateUrl: './ingresar-vehiculo.html',
   styleUrls: ['./ingresar-vehiculo.css']
 })
-export class IngresarVehiculo implements OnInit {
+export class IngresarVehiculo {
 
   ingresoForm: FormGroup;
-  tiposVehiculo$: Observable<TipoVehiculo[]>;
-  
-  mensaje: string = '';
-  mensajeTipo: 'exito' | 'error' = 'exito';
+  tiposVehiculo$: Observable<TipoVehiculo[]>; 
+
+  ticketGenerado: TicketIngreso | null = null;
+  errorMensaje: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -30,34 +35,37 @@ export class IngresarVehiculo implements OnInit {
       placa: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]], 
       idTipoVehiculo: [null, [Validators.required]] 
     });
-
     this.tiposVehiculo$ = this.vehiculo.getTiposVehiculo();
-  }
-
-  ngOnInit(): void {
   }
 
   onSubmit(): void {
     if (this.ingresoForm.invalid) {
-      this.ingresoForm.markAllAsTouched();
+      this.ingresoForm.markAllAsTouched(); 
       return; 
     }
 
-    this.mensaje = ''; 
+    this.ticketGenerado = null;
+    this.errorMensaje = null;
+
     const formData = this.ingresoForm.value;
-    
     formData.placa = formData.placa.toUpperCase();
 
     this.vehiculo.registrarEntrada(formData).subscribe({
       next: (response) => {
-        this.mensaje = `¡Éxito! Vehículo ${response.placaVehiculo} ingresado. Ticket #${response.idTicket}`;
-        this.mensajeTipo = 'exito';
+        this.ticketGenerado = response; 
         this.ingresoForm.reset(); 
       },
       error: (err) => {
-        this.mensaje = `Error: ${err.error.message || 'No se pudo registrar la entrada'}`;
-        this.mensajeTipo = 'error';
+        this.errorMensaje = `Error: ${err.error.message || 'No se pudo registrar la entrada'}`;
       }
     });
+  }
+
+  /**
+   * Vuelve a mostrar el formulario
+   */
+  registrarOtroVehiculo(): void {
+    this.ticketGenerado = null;
+    this.errorMensaje = null;
   }
 }

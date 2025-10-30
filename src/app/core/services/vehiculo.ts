@@ -40,4 +40,12 @@ export class Vehiculo {
   registrarEntrada(data: { placa: string; idTipoVehiculo: number }): Observable<TicketIngreso> {
     return this.http.post<TicketIngreso>(`${this.apiUrl}/tickets/ingreso`, data);
   }
+
+  /**
+   * Busca un ticket activo por placa
+   * (Endpoint: GET /tickets/activo/{placa})
+   */
+  getTicketActivo(placa: string): Observable<TicketIngreso> {
+    return this.http.get<TicketIngreso>(`${this.apiUrl}/tickets/activo/${placa}`);
+  }
 }

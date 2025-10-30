@@ -1,1 +1,34 @@
-<p>ticket-recibo works!</p>
+<div class="ticket-wrapper">
+  <div class="ticket-header">
+    <h2>ServiPark</h2>
+    <p>Comprobante de Ingreso</p>
+  </div>
+
+  <div class="ticket-body">
+
+    <div class="ticket-item">
+      <span>Placa</span>
+      <strong>{{ ticket.placaVehiculo }}</strong>
+    </div>
+
+    <div class="ticket-item">
+      <span>Tipo de Vehículo</span>
+      <strong>{{ ticket.tipoVehiculo }}</strong>
+    </div>
+
+    <div class="ticket-item">
+      <span>Fecha de Ingreso</span>
+      <strong>{{ ticket.fechaIngreso | date:'h:mm a - dd/MM/yyyy' }}</strong>
+    </div>
+
+    <div class="ticket-item tarifa">
+      <span>Tarifa (Minuto)</span>
+      <strong>{{ ticket.valorPorMinutoTarifa | currency:'COP':'$' }}</strong>
+    </div>
+
+  </div>
+
+  <div class="ticket-footer">
+    <p>Conserve este ticket</p>
+    </div>
+</div>
