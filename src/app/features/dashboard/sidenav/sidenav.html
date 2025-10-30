@@ -1,0 +1,20 @@
+<nav class="sidenav">
+  <h3>ServiPark</h3>
+  <ul>
+    <li>
+      <a routerLink="registrar-entrada">Registrar Entrada/Salida</a>
+    </li>
+    <li>
+      <a routerLink="ver-historial">Ver Historial</a>
+    </li>
+
+    <li *ngIf="userRole === 'ADMINISTRADOR'">
+      <a routerLink="gestionar-usuarios">Gestionar Usuarios</a>
+    </li>
+    <li *ngIf="userRole === 'ADMINISTRADOR'">
+      <a routerLink="reportes">Reportes Avanzados</a>
+    </li>
+  </ul>
+
+  <button (click)="onLogout()">Cerrar Sesión</button>
+</nav>

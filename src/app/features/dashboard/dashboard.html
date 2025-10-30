@@ -1,0 +1,16 @@
+<div class="dashboard-layout">
+
+  <app-sidenav></app-sidenav>
+
+  <main class="content">
+
+    <header class="dashboard-header" *ngIf="userName">
+      <h2>
+        Bienvenido, <strong>{{ userName }}</strong> 
+        (Rol: {{ userRole }})
+      </h2>
+    </header>
+    <router-outlet></router-outlet>
+  </main>
+
+</div>
