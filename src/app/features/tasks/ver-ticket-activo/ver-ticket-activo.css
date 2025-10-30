@@ -1,0 +1,56 @@
+.plate-input-wrapper {
+  background-color: #FBBF24;
+  border: 3px solid #1F2937;
+  border-radius: var(--border-radius);
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) inset; 
+}
+
+.plate-input-wrapper input {
+  width: 100%;
+  max-width: 200px; 
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 6px;     
+  color: var(--color-text);
+  padding: 10px 0;
+}
+.plate-input-wrapper input::placeholder {
+  color: #9A7222;
+  opacity: 0.6;
+}
+
+.response-message {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  text-align: center;
+}
+.response-message.error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+}
+
+.ticket-encontrado-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.exito-titulo {
+  color: var(--color-primary);
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+}
