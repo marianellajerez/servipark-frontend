@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../core/services/auth';
+import { Auth } from '../../core/services/auth';
 
 import { SidenavComponent } from './sidenav/sidenav';
 import { RouterOutlet } from '@angular/router'; 
@@ -23,10 +23,10 @@ export class Dashboard implements OnInit {
   userName: string | null = null;
   userRole: string | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private auth: Auth) {}
 
   ngOnInit(): void {
-    this.userName = this.authService.getCurrentUser();
-    this.userRole = this.authService.getRole();
+    this.userName = this.auth.getCurrentUser();
+    this.userRole = this.auth.getRole();
   }
 }

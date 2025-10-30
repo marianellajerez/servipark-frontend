@@ -1,43 +1,42 @@
+/* :host se refiere al selector del componente (<app-login>) */
+:host {
+  /* Usamos Flexbox para centrar todo */
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;   /* Centra verticalmente */
+  
+  /* Asegura que ocupe toda la pantalla */
+  width: 100%;
+  min-height: 100vh; /* 100% de la altura de la vista */
+  
+  /* Usa el color de fondo global que definimos */
+  background-color: var(--color-bg); 
+}
+
+/* Este es el contenedor que tiene la clase .card.
+  Le damos un ancho máximo.
+*/
 .login-container {
-  width: 300px;
-  margin: 100px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px; /* Un buen ancho para un formulario de login */
+}
+
+/* (Opcional) Estilos para el logo o título */
+.login-header {
   text-align: center;
+  margin-bottom: 24px;
 }
-.form-group {
-  margin-bottom: 15px;
-  text-align: left;
+
+.login-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
 }
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-.form-group input {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-button:disabled {
-  background-color: #ccc;
-}
-.error-message {
-  color: red;
-  margin-bottom: 15px;
-}
-.error-validation {
-  color: red;
-  font-size: 0.8em;
-  margin-top: 4px;
+
+.login-header h3 {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin: 4px 0 0 0;
 }
