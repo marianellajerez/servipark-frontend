@@ -48,4 +48,14 @@ export class Vehiculo {
   getTicketActivo(placa: string): Observable<TicketIngreso> {
     return this.http.get<TicketIngreso>(`${this.apiUrl}/tickets/activo/${placa}`);
   }
+
+  /**
+   * Registra la salida (pago) de un vehículo
+   * (Endpoint: PUT /tickets/salida)
+   * @param placa La placa del vehículo
+   */
+  registrarSalida(placa: string): Observable<TicketIngreso> {
+    // El body es { "placa": "..." }
+    return this.http.put<TicketIngreso>(`${this.apiUrl}/tickets/salida`, { placa });
+  }
 }
