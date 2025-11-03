@@ -11,6 +11,8 @@ import { VerTicketActivo } from './features/tasks/ver-ticket-activo/ver-ticket-a
 import { TicketDetalle } from './features/tasks/ticket-detalle/ticket-detalle';
 import { CobrarParqueo } from './features/tasks/cobrar-parqueo/cobrar-parqueo';
 import { TicketSalidaRecibo } from './features/tasks/ticket-salida-recibo/ticket-salida-recibo';
+import { GestionarTiposVehiculo } from './features/tasks/admin/gestionar-tipos-vehiculo/gestionar-tipos-vehiculo';
+import { GestionarTarifas } from './features/tasks/admin/gestionar-tarifas/gestionar-tarifas';
 
 export const routes: Routes = [
 
@@ -40,6 +42,18 @@ export const routes: Routes = [
       {
         path: 'ticket/:placa',
         component: TicketDetalle
+      },
+      {
+        path: 'admin/tipos-vehiculo',
+        component: GestionarTiposVehiculo,
+        canActivate: [roleGuard],
+        data: { expectedRole: 'ADMINISTRADOR' }
+      },
+      {
+        path: 'admin/tarifas', // Coincide con el Sidenav
+        component: GestionarTarifas,
+        canActivate: [roleGuard], // <-- Protegido
+        data: { expectedRole: 'ADMINISTRADOR' }
       },
       {
         path: 'gestionar-usuarios',

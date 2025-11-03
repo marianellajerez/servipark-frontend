@@ -1,0 +1,40 @@
+<div class="modal-backdrop" (click)="onClose()"></div>
+
+<div class="modal-content card">
+
+  <div class="modal-header">
+    <h3>{{ modalTitle }}</h3>
+    <button class="btn-close" (click)="onClose()">×</button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="onSave()">
+      <div class="form-group">
+        <label for="nombre">Nombre del Tipo</label>
+        <input 
+          id="nombre"
+          type="text" 
+          formControlName="nombre"
+          class="form-control"
+          placeholder="Ej. Automóvil">
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button 
+      *ngIf="isEditMode" 
+      (click)="onDeactivate()" 
+      class="btn btn-danger-outline">
+      Desactivar
+    </button>
+
+    <div class="actions-right">
+      <button (click)="onClose()" class="btn btn-secondary">Cancelar</button>
+      <button (click)="onSave()" [disabled]="form.invalid" class="btn btn-primary">
+        {{ isEditMode ? 'Guardar Cambios' : 'Crear' }}
+      </button>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,54 @@
+<div class="card">
+
+  <div class="card-header-split">
+    <div class="header-title">
+      <h2>Gestión de Tarifas</h2>
+      <p>Crear nuevas tarifas (esto reemplazará la tarifa vigente).</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-primary" (click)="openCreateModal()">
+        Crear Nueva Tarifa
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo de Vehículo</th>
+          <th class="text-right">Valor por Minuto</th>
+          <th>Vigente Desde</th>
+          <th>Vigente Hasta</th>
+          <th class="text-right">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="!(tarifas$ | async)">
+          <td colspan="5">Cargando tarifas...</td>
+        </tr>
+
+        <tr *ngFor="let tarifa of (tarifas$ | async)">
+          <td>{{ tarifa.nombreTipoVehiculo }}</td>
+          <td class="text-right">{{ tarifa.valorPorMinuto | currency:'COP':'$' }}</td>
+          <td>{{ tarifa.fechaInicio | date:'h:mm a - dd/MM/yyyy' }}</td>
+          <td>
+            {{ tarifa.fechaFin ? (tarifa.fechaFin | date:'h:mm a - dd/MM/yyyy') : '—' }}
+          </td>
+          <td class="text-right">
+            <span class="badge" [class.badge-active]="!tarifa.fechaFin" [class.badge-inactive]="!!tarifa.fechaFin">
+              {{ !tarifa.fechaFin ? 'Vigente' : 'Histórica' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<app-tarifa-modal 
+  *ngIf="isModalOpen"
+  (close)="closeModal()"
+  (save)="handleSave($event)">
+</app-tarifa-modal>

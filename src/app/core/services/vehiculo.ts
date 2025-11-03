@@ -22,6 +22,20 @@ export interface TicketIngreso {
   valorPorMinutoTarifa: number;
 }
 
+export interface TarifaResponse {
+  idTarifa: number;
+  valorPorMinuto: number;
+  fechaInicio: string;
+  fechaFin: string | null;
+  idTipoVehiculo: number;
+  nombreTipoVehiculo: string;
+}
+
+export interface TarifaCreate {
+  valorPorMinuto: number;
+  idTipoVehiculo: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -63,5 +77,50 @@ export class Vehiculo {
    */
   registrarSalida(placa: string): Observable<TicketIngreso> {
     return this.http.put<TicketIngreso>(`${this.apiUrl}/tickets/salida`, { placa });
+  }
+
+  /**
+   * [POST] Crea un nuevo tipo de vehículo.
+   * (Endpoint: POST /tipos-vehiculo)
+   * @param data { nombre: string }
+   */
+  createTipoVehiculo(data: { nombre: string }): Observable<TipoVehiculo> {
+    return this.http.post<TipoVehiculo>(`${this.apiUrl}/tipos-vehiculo`, data);
+  }
+
+  /**
+   * [PUT] Actualiza un tipo de vehículo existente.
+   * (Endpoint: PUT /tipos-vehiculo/{id})
+   * @param id El ID del tipo a actualizar
+   * @param data { nombre: string }
+   */
+  updateTipoVehiculo(id: number, data: { nombre: string }): Observable<TipoVehiculo> {
+    return this.http.put<TipoVehiculo>(`${this.apiUrl}/tipos-vehiculo/${id}`, data);
+  }
+
+  /**
+   * [DELETE] Desactiva (soft delete) un tipo de vehículo.
+   * (Endpoint: DELETE /tipos-vehiculo/{id})
+   * @param id El ID del tipo a desactivar
+   */
+  deactivateTipoVehiculo(id: number): Observable<void> {
+    // El 'responseType: 'text'' es un comodín común para respuestas vacías (204 No Content)
+    return this.http.delete<void>(`${this.apiUrl}/tipos-vehiculo/${id}`);
+  }
+
+  /**
+   * [GET] Obtiene todas las tarifas (históricas y vigentes).
+   * (Endpoint: GET /api/v1/tarifas)
+   */
+  getTarifas(): Observable<TarifaResponse[]> {
+    return this.http.get<TarifaResponse[]>(`${this.apiUrl}/tarifas`);
+  }
+
+  /**
+   * [POST] Crea una nueva tarifa (y cierra la anterior).
+   * (Endpoint: POST /api/v1/tarifas)
+   */
+  createTarifa(data: TarifaCreate): Observable<TarifaResponse> {
+    return this.http.post<TarifaResponse>(`${this.apiUrl}/tarifas`, data);
   }
 }
