@@ -50,10 +50,18 @@ export const routes: Routes = [
         data: { expectedRole: 'ADMINISTRADOR' }
       },
       {
-        path: 'admin/tarifas', // Coincide con el Sidenav
+        path: 'admin/tarifas',
         component: GestionarTarifas,
-        canActivate: [roleGuard], // <-- Protegido
+        canActivate: [roleGuard],
         data: { expectedRole: 'ADMINISTRADOR' }
+      },
+      {
+        path: 'admin/usuarios',
+        component: GestionarUsuarios,
+        canActivate: [roleGuard],
+        data: {
+          expectedRole: 'ADMINISTRADOR'
+        }
       },
       {
         path: 'gestionar-usuarios',

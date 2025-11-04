@@ -2,6 +2,35 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+export interface Rol {
+  idRol: number;
+  nombre: string;
+}
+
+export interface UsuarioResponse {
+  id: number;
+  nombre: string;
+  correo: string;
+  activo: boolean;
+  fechaCreacion: string;
+  idRol: number;
+  rolNombre: string;
+}
+
+export interface UsuarioCreate {
+  nombre: string;
+  correo: string;
+  contrasena: string;
+  idRol: number;
+}
+
+export interface UsuarioUpdate {
+  nombre: string;
+  correo: string;
+  contrasena?: string;
+  idRol: number;
+}
+
 export interface TipoVehiculo {
   idTipoVehiculo: number;
   nombre: string;
@@ -122,5 +151,48 @@ export class Vehiculo {
    */
   createTarifa(data: TarifaCreate): Observable<TarifaResponse> {
     return this.http.post<TarifaResponse>(`${this.apiUrl}/tarifas`, data);
+  }
+
+  /**
+   * [GET] Obtiene todos los roles.
+   * (Endpoint: GET /api/v1/roles)
+   */
+  getRoles(): Observable<Rol[]> {
+    // !!! ASUNCIÓN IMPORTANTE !!!
+    // Estoy asumiendo que tienes un endpoint de roles.
+    // Si no existe, deberás crearlo en tu backend.
+    return this.http.get<Rol[]>(`${this.apiUrl}/roles`);
+  }
+
+  /**
+   * [GET] Obtiene todos los usuarios activos.
+   * (Endpoint: GET /api/v1/usuarios)
+   */
+  getUsuarios(): Observable<UsuarioResponse[]> {
+    return this.http.get<UsuarioResponse[]>(`${this.apiUrl}/usuarios`);
+  }
+
+  /**
+   * [POST] Crea un nuevo usuario.
+   * (Endpoint: POST /api/v1/usuarios)
+   */
+  createUsuario(data: UsuarioCreate): Observable<UsuarioResponse> {
+    return this.http.post<UsuarioResponse>(`${this.apiUrl}/usuarios`, data);
+  }
+
+  /**
+   * [PUT] Actualiza un usuario.
+   * (Endpoint: PUT /api/v1/usuarios/{id})
+   */
+  updateUsuario(id: number, data: UsuarioUpdate): Observable<UsuarioResponse> {
+    return this.http.put<UsuarioResponse>(`${this.apiUrl}/usuarios/${id}`, data);
+  }
+
+  /**
+   * [DELETE] Desactiva (soft delete) un usuario.
+   * (Endpoint: DELETE /api/v1/usuarios/{id})
+   */
+  deactivateUsuario(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/usuarios/${id}`);
   }
 }

@@ -1,0 +1,52 @@
+<div class="modal-backdrop" (click)="onClose()"></div>
+
+<div class="modal-content card">
+
+    <div class="modal-header">
+        <h3>{{ modalTitle }}</h3>
+        <button class="btn-close" (click)="onClose()">×</button>
+    </div>
+
+    <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="onSave()">
+
+            <div class="form-group">
+                <label for="nombre">Nombre Completo</label>
+                <input id="nombre" type="text" formControlName="nombre" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="correo">Correo Electrónico (Login)</label>
+                <input id="correo" type="email" formControlName="correo" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="contrasena">Contraseña</label>
+                <input id="contrasena" type="password" formControlName="contrasena" class="form-control"
+                    [placeholder]="isEditMode ? '(Dejar en blanco para no cambiar)' : 'Mínimo 6 caracteres'">
+            </div>
+
+            <div class="form-group">
+                <label for="idRol">Rol del Usuario</label>
+                <select id="idRol" formControlName="idRol" class="form-control">
+                    <option [ngValue]="null" disabled>Seleccione un rol...</option>
+                    <option *ngFor="let rol of roles" [value]="rol.idRol"> {{ rol.nombre }}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button *ngIf="isEditMode" (click)="onDeactivate()" class="btn btn-danger-outline">
+            Desactivar Usuario
+        </button>
+
+        <div class="actions-right">
+            <button (click)="onClose()" class="btn btn-secondary">Cancelar</button>
+            <button (click)="onSave()" [disabled]="form.invalid" class="btn btn-primary">
+                {{ isEditMode ? 'Guardar Cambios' : 'Crear Usuario' }}
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,54 @@
-<p>gestionar-usuarios works!</p>
+<div class="card">
+
+    <div class="card-header-split">
+        <div class="header-title">
+            <h2>Gestión de Usuarios</h2>
+            <p>Crear, editar y desactivar usuarios del sistema (Cajeros y Administradores).</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-primary" (click)="openCreateModal()">
+                Crear Nuevo Usuario
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo (Login)</th>
+                    <th>Rol</th>
+                    <th class="text-right">Estado</th>
+                    <th class="text-right">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="!(usuarios$ | async)">
+                    <td colspan="5">Cargando usuarios...</td>
+                </tr>
+
+                <tr *ngFor="let user of (usuarios$ | async)">
+                    <td>{{ user.nombre }}</td>
+                    <td>{{ user.correo }}</td>
+                    <td>{{ user.rolNombre }}</td>
+                    <td class="text-right">
+                        <span class="badge" [class.badge-active]="user.activo">
+                            {{ user.activo ? 'Activo' : 'Inactivo' }}
+                        </span>
+                    </td>
+                    <td class="text-right">
+                        <button class="btn btn-secondary" (click)="openEditModal(user)">
+                            Gestionar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<app-usuario-modal *ngIf="isModalOpen" [data]="selectedUsuario" [roles]="(roles$ | async) || []" (close)="closeModal()"
+    (save)="handleSave($event)" (deactivate)="handleDeactivate($event)">
+</app-usuario-modal>
