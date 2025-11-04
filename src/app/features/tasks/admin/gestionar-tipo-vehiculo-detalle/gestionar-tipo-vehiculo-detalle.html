@@ -1,0 +1,92 @@
+<div class="breadcrumb">
+  <a routerLink="/dashboard/admin/tipos-vehiculo">&larr; Volver a Tipos de Vehículo</a>
+</div>
+
+<div *ngIf="tipoVehiculo">
+  
+  <div class="card">
+    <div class="card-header-split">
+      <div class="header-title">
+        <h2>Gestionar: {{ tipoVehiculo.nombre }}</h2>
+        <p>Edita el nombre o cambia el estado de este tipo de vehículo.</p>
+      </div>
+      <div class="header-actions">
+        <span class="badge" [class.badge-active]="tipoVehiculo.activo" [class.badge-inactive]="!tipoVehiculo.activo">
+          {{ tipoVehiculo.activo ? 'Activo' : 'Inactivo' }}
+        </span>
+      </div>
+    </div>
+    
+    <form [formGroup]="editForm" (ngSubmit)="handleUpdateNombre()">
+      
+      <div class="form-group">
+        <label for="nombre">Nombre del Tipo</label>
+        <input id="nombre" type="text" formControlName="nombre" class="form-control">
+      </div>
+      
+      <div class="form-actions-right">
+        <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid || editForm.pristine">
+          Actualizar Tipo Vehiculo
+        </button>
+      </div>
+    </form>
+    
+    <div class="card-footer-actions">
+      <button *ngIf="tipoVehiculo.activo" class="btn btn-danger-outline" (click)="handleDeactivate()">
+        Desactivar Tipo de Vehículo
+      </button>
+      <button *ngIf="!tipoVehiculo.activo" class="btn btn-success-outline" (click)="handleActivate()">
+        Reactivar Tipo de Vehículo
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header-split">
+      <div class="header-title">
+        <h2>Historial de Tarifas</h2>
+        <p>Crea una nueva tarifa para reemplazar la vigente.</p>
+      </div>
+      <div class="header-actions">
+        <button 
+          class="btn btn-primary" 
+          (click)="openCreateModal()"
+          [disabled]="!tipoVehiculo.activo"
+          [title]="!tipoVehiculo.activo ? 'Debe activar el tipo de vehículo para agregar tarifas' : 'Crear nueva tarifa'">
+          Crear Nueva Tarifa
+        </button>
+      </div>
+    </div>
+    
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th class="text-right">Valor por Minuto</th>
+            <th>Vigente Desde</th>
+            <th>Vigente Hasta</th>
+            <th class="text-right">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tarifa of (tarifas$ | async)">
+            <td class="text-right">{{ tarifa.valorPorMinuto | currency:'COP':'$' }}</td>
+            <td>{{ tarifa.fechaInicio | date:'h:mm a - dd/MM/yyyy' }}</td>
+            <td>{{ tarifa.fechaFin ? (tarifa.fechaFin | date:'h:mm a - dd/MM/yyyy') : '—' }}</td>
+            <td class="text-right">
+              <span class="badge" [class.badge-active]="!tarifa.fechaFin" [class.badge-inactive]="!!tarifa.fechaFin">
+                {{ !tarifa.fechaFin ? 'Vigente' : 'Histórica' }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<app-tarifa-modal 
+  *ngIf="isModalOpen"
+  (close)="closeModal()"
+  (save)="handleCreateTarifa($event)">
+</app-tarifa-modal>

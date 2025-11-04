@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 
-import { Vehiculo, TarifaResponse, TarifaCreate } from '../../../../core/services/vehiculo';
+import { TarifaResponse, TarifaCreate } from '../../../../core/interfaces/data';
+import { Tarifa } from '../../../../core/services/tarifa';
 import { TarifaModal } from '../../../../shared/components/tarifa-modal/tarifa-modal';
 
 @Component({
@@ -20,14 +21,14 @@ export class GestionarTarifas implements OnInit {
   tarifas$: Observable<TarifaResponse[]> = of([]);
   isModalOpen = false;
 
-  constructor(private vehiculoService: Vehiculo) { }
+  constructor(private tarifaService: Tarifa) { }
 
   ngOnInit(): void {
     this.loadTarifas();
   }
 
   loadTarifas(): void {
-    this.tarifas$ = this.vehiculoService.getTarifas();
+    this.tarifas$ = this.tarifaService.getTarifas();
   }
 
   openCreateModal(): void {
@@ -40,7 +41,7 @@ export class GestionarTarifas implements OnInit {
 
   handleSave(formData: TarifaCreate): void {
 
-    this.vehiculoService.createTarifa(formData).subscribe({
+    this.tarifaService.createTarifa(formData).subscribe({
       next: () => {
         this.loadTarifas();
         this.closeModal();

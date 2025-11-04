@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Vehiculo } from '../../../core/services/vehiculo';
+import { Ticket } from '../../../core/services/ticket';
 
 @Component({
   selector: 'app-cobrar-parqueo',
@@ -19,7 +19,7 @@ export class CobrarParqueo {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private vehiculo: Vehiculo
+    private ticketService: Ticket
   ) {
     this.searchForm = this.fb.group({
       placa: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]]
@@ -32,13 +32,13 @@ export class CobrarParqueo {
     this.errorMensaje = null;
     const placa = this.searchForm.value.placa.toUpperCase();
 
-    this.vehiculo.registrarSalida(placa).subscribe({
+    this.ticketService.registrarSalida(placa).subscribe({
       next: (ticketPagado) => {
         this.router.navigate(['/dashboard/recibo-salida'], {
           state: { ticket: ticketPagado }
         });
       },
-      error: (err) => {
+      error: (err: any) => {
         this.errorMensaje = `Error: ${err.error.message || 'No se pudo procesar el pago'}`;
       }
     });

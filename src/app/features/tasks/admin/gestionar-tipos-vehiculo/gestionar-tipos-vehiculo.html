@@ -3,7 +3,7 @@
   <div class="card-header-split">
     <div class="header-title">
       <h2>Gestión de Tipos de Vehículo</h2>
-      <p>Crea, edita y desactiva los tipos de vehículo del parqueadero.</p>
+      <p>Crea nuevos tipos o gestiona los existentes (incluyendo sus tarifas).</p>
     </div>
     <div class="header-actions">
       <button class="btn btn-primary" (click)="openCreateModal()">
@@ -17,20 +17,28 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          
+          <th class="text-right">Tarifa Vigente (x Min)</th>
           <th class="text-right">Estado</th>
-          
           <th class="text-right">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngIf="!(tiposVehiculo$ | async)">
-          <td colspan="3">Cargando tipos de vehículo...</td>
+          <td colspan="4">Cargando tipos de vehículo...</td>
         </tr>
         
         <tr *ngFor="let tipo of (tiposVehiculo$ | async)">
           <td>{{ tipo.nombre }}</td>
           
+          <td class="text-right">
+            <span *ngIf="tipo.valorPorMinutoVigente; else noTarifa">
+              {{ tipo.valorPorMinutoVigente | currency:'COP':'$' }}
+            </span>
+            <ng-template #noTarifa>
+              <span class="badge badge-inactive">Sin Tarifa</span>
+            </ng-template>
+          </td>
+
           <td class="text-right">
             <span class="badge" [class.badge-active]="tipo.activo" [class.badge-inactive]="!tipo.activo">
               {{ tipo.activo ? 'Activo' : 'Inactivo' }}
@@ -38,9 +46,9 @@
           </td>
           
           <td class="text-right">
-            <button class="btn btn-secondary" (click)="openEditModal(tipo)">
+            <a [routerLink]="['/dashboard/admin/tipos-vehiculo-detalle', tipo.idTipoVehiculo]" class="btn btn-secondary">
               Gestionar
-            </button>
+            </a>
           </td>
         </tr>
       </tbody>
@@ -51,8 +59,7 @@
 
 <app-tipo-vehiculo-modal 
   *ngIf="isModalOpen"
-  [data]="selectedTipo"
+  [data]="null"
   (close)="closeModal()"
-  (save)="handleSave($event)"
-  (deactivate)="handleDeactivate($event)">
+  (save)="handleSave($event)">
 </app-tipo-vehiculo-modal>

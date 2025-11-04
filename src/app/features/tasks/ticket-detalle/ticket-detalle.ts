@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Vehiculo, TicketIngreso } from '../../../core/services/vehiculo';
+import { TicketIngreso } from '../../../core/interfaces/data';
+import { Ticket } from '../../../core/services/ticket';
 import { Subscription, switchMap, catchError, EMPTY } from 'rxjs';
 
 import { TicketRecibo } from '../../../shared/components/ticket-recibo/ticket-recibo';
@@ -30,7 +31,7 @@ export class TicketDetalle implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private vehiculo: Vehiculo
+    private ticketService: Ticket
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +43,7 @@ export class TicketDetalle implements OnInit, OnDestroy {
         }
         
         this.limpiarCalculos();
-        return this.vehiculo.getTicketActivo(placa); 
+        return this.ticketService.getTicketActivo(placa); 
       }),
       catchError(err => {
         this.errorMensaje = `Error: ${err.error.message || 'No se encontró un ticket activo para esta placa'}`;
@@ -58,9 +59,6 @@ export class TicketDetalle implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * Se ejecuta al destruir el componente (ej. al navegar a otra página)
-   */
   ngOnDestroy(): void {
     this.limpiarCalculos();
     if (this.ticketSubscription) {
@@ -68,9 +66,6 @@ export class TicketDetalle implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Inicia el temporizador que actualiza el costo cada 10 segundos
-   */
   iniciarTimerCalculo(): void {
     this.actualizarCalculoPreliminar();
     
@@ -79,9 +74,6 @@ export class TicketDetalle implements OnInit, OnDestroy {
     }, 10000);
   }
 
-  /**
-   * La lógica que calcula los minutos y el costo
-   */
   actualizarCalculoPreliminar(): void {
     if (!this.ticket) return;
 
@@ -99,9 +91,6 @@ export class TicketDetalle implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Limpia el timer y los valores calculados
-   */
   limpiarCalculos(): void {
     if (this.timerId) {
       clearInterval(this.timerId);

@@ -12,7 +12,7 @@ import { TicketDetalle } from './features/tasks/ticket-detalle/ticket-detalle';
 import { CobrarParqueo } from './features/tasks/cobrar-parqueo/cobrar-parqueo';
 import { TicketSalidaRecibo } from './features/tasks/ticket-salida-recibo/ticket-salida-recibo';
 import { GestionarTiposVehiculo } from './features/tasks/admin/gestionar-tipos-vehiculo/gestionar-tipos-vehiculo';
-import { GestionarTarifas } from './features/tasks/admin/gestionar-tarifas/gestionar-tarifas';
+import { GestionarTipoVehiculoDetalle } from './features/tasks/admin/gestionar-tipo-vehiculo-detalle/gestionar-tipo-vehiculo-detalle';
 
 export const routes: Routes = [
 
@@ -59,11 +59,16 @@ export const routes: Routes = [
         title: 'Admin: Tipos de Vehículo'
       },
       {
-        path: 'admin/tarifas',
-        component: GestionarTarifas,
+        path: 'admin/tipos-vehiculo-detalle/:id',
+        component: GestionarTipoVehiculoDetalle,
         canActivate: [roleGuard],
         data: { expectedRole: 'ADMINISTRADOR' },
-        title: 'Admin: Tarifas'
+        title: 'Admin: Gestionar Tipo'
+      },
+      { 
+        path: 'admin/tarifas', 
+        redirectTo: 'admin/tipos-vehiculo', 
+        pathMatch: 'full' 
       },
       {
         path: 'admin/usuarios',
@@ -74,10 +79,8 @@ export const routes: Routes = [
       },
       {
         path: 'gestionar-usuarios',
-        component: GestionarUsuarios,
-        canActivate: [roleGuard],
-        data: { expectedRole: 'ADMINISTRADOR' },
-        title: 'Admin: Usuarios'
+        redirectTo: 'admin/usuarios',
+        pathMatch: 'full'
       },
       {
         path: '',

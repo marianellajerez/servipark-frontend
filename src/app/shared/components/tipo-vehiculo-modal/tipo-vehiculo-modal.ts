@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { TipoVehiculo } from '../../../core/services/vehiculo';
+import { TipoVehiculo } from '../../../core/interfaces/data';
 
 @Component({
   selector: 'app-tipo-vehiculo-modal',
@@ -11,12 +11,13 @@ import { TipoVehiculo } from '../../../core/services/vehiculo';
   styleUrls: ['./tipo-vehiculo-modal.css']
 })
 export class TipoVehiculoModal implements OnInit {
-
+  
   @Input() data: TipoVehiculo | null = null; 
-
+  
   @Output() close = new EventEmitter<void>();
-  @Output() save = new EventEmitter<{ nombre: string }>();
+  @Output() save = new EventEmitter<any>();
   @Output() deactivate = new EventEmitter<number>();
+  @Output() activate = new EventEmitter<number>();
 
   form: FormGroup;
   isEditMode = false;
@@ -24,31 +25,46 @@ export class TipoVehiculoModal implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(3)]]
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      valorPorMinuto: [null]
     });
   }
 
   ngOnInit(): void {
     if (this.data) {
-      // Modo Edición
       this.isEditMode = true;
       this.modalTitle = 'Editar Tipo de Vehículo';
       this.form.patchValue({ nombre: this.data.nombre });
+      this.form.get('valorPorMinuto')?.clearValidators();
     } else {
-      // Modo Creación
       this.isEditMode = false;
       this.modalTitle = 'Crear Tipo de Vehículo';
+      this.form.get('valorPorMinuto')?.setValidators([Validators.required, Validators.min(1)]);
     }
   }
 
   onSave(): void {
-    if (this.form.invalid) return;
-    this.save.emit(this.form.value);
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    
+    const formData = this.form.value;
+    if (this.isEditMode) {
+      delete formData.valorPorMinuto;
+    }
+
+    this.save.emit(formData);
   }
 
   onDeactivate(): void {
     if (!this.data) return;
     this.deactivate.emit(this.data.idTipoVehiculo);
+  }
+
+  onActivate(): void {
+    if (!this.data) return;
+    this.activate.emit(this.data.idTipoVehiculo);
   }
 
   onClose(): void {

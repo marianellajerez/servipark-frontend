@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { UsuarioResponse, Rol } from '../../../core/services/vehiculo';
+import { UsuarioResponse, Rol } from '../../../core/interfaces/data';
 
 @Component({
   selector: 'app-usuario-modal',

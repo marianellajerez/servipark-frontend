@@ -92,8 +92,11 @@ a:hover {
 .btn-primary:hover {
   background-color: var(--color-primary-hover);
 }
+
+/* --- CAMBIO AQUÍ --- */
 .btn-primary:disabled {
-  background-color: #A3E635; /* Un verde más pálido */
+  background-color: #D1D5DB; /* Gris claro */
+  color: #9CA3AF; /* Gris medio */
   cursor: not-allowed;
 }
 
@@ -147,4 +150,3 @@ a:hover {
   padding: 24px;
   box-shadow: var(--box-shadow);
 }
-

@@ -2,7 +2,8 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { Vehiculo, TipoVehiculo } from '../../../core/services/vehiculo';
+import { TipoVehiculo } from '../../../core/interfaces/data';
+import { TipoVehiculoService } from '../../../core/services/tipo-vehiculo';
 
 @Component({
   selector: 'app-tarifa-modal',
@@ -21,7 +22,7 @@ export class TarifaModal implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private vehiculoService: Vehiculo
+    private tipoVehiculoService: TipoVehiculoService
   ) {
     this.form = this.fb.group({
       valorPorMinuto: [null, [Validators.required, Validators.min(1)]],
@@ -30,7 +31,7 @@ export class TarifaModal implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tiposVehiculo$ = this.vehiculoService.getTiposVehiculo();
+    this.tiposVehiculo$ = this.tipoVehiculoService.getTiposVehiculo();
   }
 
   onSave(): void {

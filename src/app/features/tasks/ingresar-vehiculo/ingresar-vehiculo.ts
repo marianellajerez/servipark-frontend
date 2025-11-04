@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Vehiculo, TipoVehiculo } from '../../../core/services/vehiculo';
+import { TipoVehiculo } from '../../../core/interfaces/data';
+import { Ticket } from '../../../core/services/ticket';
+import { TipoVehiculoService } from '../../../core/services/tipo-vehiculo';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -24,14 +26,15 @@ export class IngresarVehiculo {
 
   constructor(
     private fb: FormBuilder,
-    private vehiculo: Vehiculo,
+    private ticketService: Ticket,
+    private tipoVehiculoService: TipoVehiculoService,
     private router: Router
   ) {
     this.ingresoForm = this.fb.group({
       placa: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]], 
       idTipoVehiculo: [null, [Validators.required]] 
     });
-    this.tiposVehiculo$ = this.vehiculo.getTiposVehiculo();
+    this.tiposVehiculo$ = this.tipoVehiculoService.getTiposVehiculo();
   }
 
   onSubmit(): void {
@@ -44,11 +47,11 @@ export class IngresarVehiculo {
     const formData = this.ingresoForm.value;
     formData.placa = formData.placa.toUpperCase();
 
-    this.vehiculo.registrarEntrada(formData).subscribe({
+    this.ticketService.registrarEntrada(formData).subscribe({
       next: (response) => {
         this.router.navigate(['/dashboard/ticket', response.placaVehiculo]);
       },
-      error: (err) => {
+      error: (err: any) => {
         this.errorMensaje = `Error: ${err.error.message || 'No se pudo registrar la entrada'}`;
       }
     });

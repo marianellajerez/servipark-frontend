@@ -1,7 +1,7 @@
 <div class="modal-backdrop" (click)="onClose()"></div>
 
 <div class="modal-content card">
-
+  
   <div class="modal-header">
     <h3>{{ modalTitle }}</h3>
     <button class="btn-close" (click)="onClose()">×</button>
@@ -9,6 +9,7 @@
 
   <div class="modal-body">
     <form [formGroup]="form" (ngSubmit)="onSave()">
+      
       <div class="form-group">
         <label for="nombre">Nombre del Tipo</label>
         <input 
@@ -18,17 +19,35 @@
           class="form-control"
           placeholder="Ej. Automóvil">
       </div>
+
+      <div class="form-group" *ngIf="!isEditMode">
+        <label for="valorPorMinuto">Tarifa Inicial (Valor por Minuto)</label>
+        <input 
+          id="valorPorMinuto"
+          type="number" 
+          formControlName="valorPorMinuto"
+          class="form-control"
+          placeholder="100">
+      </div>
+
     </form>
   </div>
-
+  
   <div class="modal-footer">
     <button 
-      *ngIf="isEditMode" 
+      *ngIf="isEditMode && data?.activo" 
       (click)="onDeactivate()" 
       class="btn btn-danger-outline">
       Desactivar
     </button>
 
+    <button 
+      *ngIf="isEditMode && data && !data.activo" 
+      (click)="onActivate()" 
+      class="btn btn-success-outline">
+      Reactivar
+    </button>
+    
     <div class="actions-right">
       <button (click)="onClose()" class="btn btn-secondary">Cancelar</button>
       <button (click)="onSave()" [disabled]="form.invalid" class="btn btn-primary">

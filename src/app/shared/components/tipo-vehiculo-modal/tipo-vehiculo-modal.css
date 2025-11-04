@@ -78,3 +78,20 @@
   background-color: var(--color-danger);
   color: white;
 }
+
+.btn-success-outline {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-family);
+  border: 1px solid var(--color-primary);
+  background: transparent;
+  color: var(--color-primary);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-success-outline:hover {
+  background-color: var(--color-primary);
+  color: white;
+}

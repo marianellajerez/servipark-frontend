@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 
-import { Vehiculo, UsuarioResponse, Rol, UsuarioCreate, UsuarioUpdate } from '../../../core/services/vehiculo';
+import { UsuarioResponse, Rol, UsuarioCreate, UsuarioUpdate } from '../../../core/interfaces/data';
+import { Usuario } from '../../../core/services/usuario';
 import { UsuarioModal } from '../../../shared/components/usuario-modal/usuario-modal';
 
 @Component({
@@ -23,15 +24,15 @@ export class GestionarUsuarios implements OnInit {
   isModalOpen = false;
   selectedUsuario: UsuarioResponse | null = null;
 
-  constructor(private vehiculoService: Vehiculo) { }
+  constructor(private usuarioService: Usuario) { }
 
   ngOnInit(): void {
     this.loadData();
   }
 
   loadData(): void {
-    this.usuarios$ = this.vehiculoService.getUsuarios();
-    this.roles$ = this.vehiculoService.getRoles();
+    this.usuarios$ = this.usuarioService.getUsuarios();
+    this.roles$ = this.usuarioService.getRoles();
   }
 
   openCreateModal(): void {
@@ -50,8 +51,8 @@ export class GestionarUsuarios implements OnInit {
 
   handleSave(formData: UsuarioCreate | UsuarioUpdate): void {
     const request$ = this.selectedUsuario
-      ? this.vehiculoService.updateUsuario(this.selectedUsuario.id, (formData as UsuarioUpdate))
-      : this.vehiculoService.createUsuario(formData as UsuarioCreate);
+      ? this.usuarioService.updateUsuario(this.selectedUsuario.id, (formData as UsuarioUpdate))
+      : this.usuarioService.createUsuario(formData as UsuarioCreate);
 
     request$.subscribe({
       next: () => {
@@ -68,7 +69,7 @@ export class GestionarUsuarios implements OnInit {
   handleDeactivate(id: number): void {
     if (confirm("¿Está seguro de que desea DESACTIVAR este usuario?")) {
 
-      this.vehiculoService.deactivateUsuario(id).subscribe({
+      this.usuarioService.deactivateUsuario(id).subscribe({
         next: () => {
           this.loadData();
           this.closeModal();
