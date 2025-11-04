@@ -18,26 +18,28 @@
 
     <div class="ticket-item">
       <span>Fecha de Ingreso</span>
-      <strong>{{ ticket.fechaIngreso | date:'h:mm a - dd/MM/yyyy' }}</strong>
+      <strong>{{ ingresoDate | date:'h:mm a - dd/MM/yyyy' }}</strong>
     </div>
 
     <ng-container *ngIf="!ticket.fechaSalida && preliminaryMinutes !== null">
       <div class="ticket-item preliminary">
-        <span>Minutos (hasta ahora)</span>
-        <strong>{{ preliminaryMinutes }} min</strong>
+        <span>Tiempo (hasta ahora)</span>
+        <strong>{{ preliminaryMinutes | formatDuration }}</strong>
       </div>
     </ng-container>
+    
     <ng-container *ngIf="ticket.fechaSalida">
       <div class="ticket-item">
         <span>Fecha de Salida</span>
-        <strong>{{ ticket.fechaSalida | date:'h:mm a - dd/MM/yyyy' }}</strong>
+        <strong>{{ salidaDate | date:'h:mm a - dd/MM/yyyy' }}</strong>
       </div>
       
       <div class="ticket-item">
-        <span>Minutos Transcurridos</span>
-        <strong>{{ minutosTranscurridos }} min</strong>
+        <span>Tiempo Transcurrido</span>
+        <strong>{{ minutosTranscurridos | formatDuration }}</strong>
       </div>
     </ng-container>
+
     <div class="ticket-item tarifa">
       <span>Tarifa (Minuto)</span>
       <strong>{{ ticket.valorPorMinutoTarifa | currency:'COP':'$' }}</strong>
@@ -49,6 +51,7 @@
         <strong>{{ preliminaryCost | currency:'COP':'$' }}</strong>
       </div>
     </ng-container>
+    
     <div *ngIf="ticket.valorTotal" class="ticket-item total">
       <span>VALOR TOTAL</span>
       <strong>{{ ticket.valorTotal | currency:'COP':'$' }}</strong>
