@@ -16,60 +16,68 @@ import { GestionarTarifas } from './features/tasks/admin/gestionar-tarifas/gesti
 
 export const routes: Routes = [
 
-  { path: 'login', component: Login },
+  { 
+    path: 'login', 
+    component: Login, 
+    title: 'Iniciar Sesión' 
+  },
   {
     path: 'dashboard',
     component: Dashboard,
     canActivate: [authGuard],
-
     children: [
       {
         path: 'ingresar-vehiculo',
-        component: IngresarVehiculo
+        component: IngresarVehiculo,
+        title: 'Ingresar Vehículo'
       },
       {
         path: 'ver-ticket-activo',
-        component: VerTicketActivo
+        component: VerTicketActivo,
+        title: 'Ver Ticket Activo'
       },
       {
         path: 'cobrar-parqueo',
-        component: CobrarParqueo
+        component: CobrarParqueo,
+        title: 'Cobrar Parqueo'
       },
       {
         path: 'recibo-salida',
-        component: TicketSalidaRecibo
+        component: TicketSalidaRecibo,
+        title: 'Recibo de Salida'
       },
       {
         path: 'ticket/:placa',
-        component: TicketDetalle
+        component: TicketDetalle,
+        title: 'Detalle de Ticket'
       },
       {
         path: 'admin/tipos-vehiculo',
         component: GestionarTiposVehiculo,
         canActivate: [roleGuard],
-        data: { expectedRole: 'ADMINISTRADOR' }
+        data: { expectedRole: 'ADMINISTRADOR' },
+        title: 'Admin: Tipos de Vehículo'
       },
       {
         path: 'admin/tarifas',
         component: GestionarTarifas,
         canActivate: [roleGuard],
-        data: { expectedRole: 'ADMINISTRADOR' }
+        data: { expectedRole: 'ADMINISTRADOR' },
+        title: 'Admin: Tarifas'
       },
       {
         path: 'admin/usuarios',
         component: GestionarUsuarios,
         canActivate: [roleGuard],
-        data: {
-          expectedRole: 'ADMINISTRADOR'
-        }
+        data: { expectedRole: 'ADMINISTRADOR' },
+        title: 'Admin: Usuarios'
       },
       {
         path: 'gestionar-usuarios',
         component: GestionarUsuarios,
         canActivate: [roleGuard],
-        data: {
-          expectedRole: 'ADMINISTRADOR'
-        }
+        data: { expectedRole: 'ADMINISTRADOR' },
+        title: 'Admin: Usuarios'
       },
       {
         path: '',
