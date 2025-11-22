@@ -1,0 +1,42 @@
+<div class="card table-card">
+  <h3>Detalle del Historial de Tickets Cerrados ({{ data.length }} Registros)</h3>
+  
+  <div class="table-responsive">
+    <table class="historic-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Placa</th>
+          <th>Tipo Vehículo</th>
+          <th>F. Ingreso</th>
+          <th>F. Salida</th>
+          <th>Cajero</th>
+          <th>Valor Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of ticketsMostrados"> 
+          <td>{{ ticket.idTicket }}</td>
+          <td><strong>{{ ticket.placaVehiculo }}</strong></td>
+          <td>{{ ticket.tipoVehiculo }}</td>
+          <td>{{ ticket.fechaIngreso | date:'medium' }}</td> 
+          <td>{{ ticket.fechaSalida | date:'medium' }}</td>
+          <td>{{ ticket.emailUsuario }}</td>
+          <td>{{ ticket.valorTotal | currency:'USD':'symbol':'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="paginator-controls" *ngIf="data.length > 0">
+    <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn btn-secondary">
+      Anterior
+    </button>
+    <span>
+      Página {{ currentPage }} de {{ totalPages }}
+    </span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="btn btn-secondary">
+      Siguiente
+    </button>
+  </div>
+</div>

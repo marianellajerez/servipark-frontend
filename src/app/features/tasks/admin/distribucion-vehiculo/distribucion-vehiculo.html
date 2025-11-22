@@ -1,0 +1,42 @@
+<div class="card chart-card">
+  <h3>Distribución de Ingresos por Tipo de Vehículo</h3>
+  
+  <div *ngIf="processedData.length > 0 && totalIngresos > 0; else noData">
+    <div class="chart-placeholder">
+      <p>Gráfico de Pastel/Dona - Ingresos Totales: {{ totalIngresos | currency:'USD':'symbol':'1.2-2' }}</p>
+      <div class="chart-canvas">
+        <canvas
+          baseChart
+          [data]="doughnutChartData"
+          [type]="doughnutChartType"
+          [options]="doughnutChartOptions"
+          aria-label="Distribución de ingresos por tipo de vehículo"
+          role="img"
+          style="max-height: 320px; width:100%;">
+        </canvas>
+      </div>
+      
+    </div>
+    
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Tipo de Vehículo</th>
+          <th>Ingreso Total</th>
+          <th>% de Ingreso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of processedData">
+          <td>{{ item.tipoVehiculo }}</td>
+          <td>{{ item.ingresoTotal | currency:'USD':'symbol':'1.2-2' }}</td>
+          <td>{{ item.porcentaje | number:'1.2-2' }}%</td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>
+  <ng-template #noData>
+    <p class="no-data-message">No se encontraron transacciones cerradas para la distribución.</p>
+  </ng-template>
+</div>

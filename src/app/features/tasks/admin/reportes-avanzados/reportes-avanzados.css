@@ -1,0 +1,34 @@
+
+.reportes-container {
+	padding: 16px;
+}
+
+.filter-section {
+	margin-bottom: 20px;
+}
+
+.kpi-cards {
+	display: flex;
+	gap: 20px; /* espacio entre cada card */
+	align-items: stretch;
+	margin-bottom: 20px;
+	flex-wrap: wrap;
+}
+
+.kpi-cards app-kpi-card {
+	flex: 1 1 220px; /* cada card crece y tiene un ancho base para responsividad */
+}
+
+.charts-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px; /* espacio entre charts */
+	align-items: start;
+}
+
+@media (max-width: 900px) {
+	.charts-grid {
+		grid-template-columns: 1fr;
+	}
+}
+

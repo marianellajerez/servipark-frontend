@@ -13,6 +13,7 @@ import { CobrarParqueo } from './features/tasks/cobrar-parqueo/cobrar-parqueo';
 import { TicketSalidaRecibo } from './features/tasks/ticket-salida-recibo/ticket-salida-recibo';
 import { GestionarTiposVehiculo } from './features/tasks/admin/gestionar-tipos-vehiculo/gestionar-tipos-vehiculo';
 import { GestionarTipoVehiculoDetalle } from './features/tasks/admin/gestionar-tipo-vehiculo-detalle/gestionar-tipo-vehiculo-detalle';
+import { ReportesAvanzados } from './features/tasks/admin/reportes-avanzados/reportes-avanzados'; 
 
 export const routes: Routes = [
 
@@ -51,6 +52,8 @@ export const routes: Routes = [
         component: TicketDetalle,
         title: 'Detalle de Ticket'
       },
+
+      // Rutas de Administración (ADMINISTRADOR)
       {
         path: 'admin/tipos-vehiculo',
         component: GestionarTiposVehiculo,
@@ -77,10 +80,26 @@ export const routes: Routes = [
         data: { expectedRole: 'ADMINISTRADOR' },
         title: 'Admin: Usuarios'
       },
+      // === RUTA DE REPORTES AVANZADOS ===
+      {
+        path: 'admin/reportes', 
+        component: ReportesAvanzados,
+        canActivate: [roleGuard],
+        data: { expectedRole: 'ADMINISTRADOR' }, 
+        title: 'Admin: Reportes Avanzados'
+      },
+      // ==================================
+
+      // Redirecciones y rutas cortas
       {
         path: 'gestionar-usuarios',
         redirectTo: 'admin/usuarios',
         pathMatch: 'full'
+      },
+      { 
+        path: 'reportes', 
+        redirectTo: 'admin/reportes', 
+        pathMatch: 'full' 
       },
       {
         path: '',
@@ -89,6 +108,7 @@ export const routes: Routes = [
       }
     ]
   },
+  // Rutas fuera del dashboard
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];

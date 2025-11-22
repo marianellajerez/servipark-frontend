@@ -1,0 +1,55 @@
+<div class="reportes-container">
+  
+  <h2 class="title">📈 Reportes Avanzados de Operación</h2>
+
+  <div class="filter-section">
+    <form [formGroup]="reporteForm" (ngSubmit)="generarReporte()">
+      <div class="form-group">
+        <label for="fechaInicio">Fecha/Hora de Inicio:</label>
+        <input type="datetime-local" id="fechaInicio" formControlName="fechaInicio" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="fechaFin">Fecha/Hora de Fin:</label>
+        <input type="datetime-local" id="fechaFin" formControlName="fechaFin" class="form-control">
+      </div>
+      <button type="submit" [disabled]="reporteForm.invalid || isLoading" class="btn btn-primary">
+        <span *ngIf="!isLoading">Generar Reporte</span>
+        <span *ngIf="isLoading">Cargando...</span>
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="hasSearched && !isLoading && ticketsCerrados.length === 0" class="alert alert-info">
+    No se encontraron tickets cerrados en el rango de fechas seleccionado.
+  </div>
+
+  <div *ngIf="ticketsCerrados.length > 0 && !isLoading" class="results-section">
+
+    <div class="kpi-cards">
+        <app-kpi-card title="Ingresos Totales" 
+                      [value]="ingresosTotales | currency:'USD':'symbol':'1.2-2'" 
+                      icon="💰">
+        </app-kpi-card>
+
+        <app-kpi-card title="Tickets Cerrados" 
+                      [value]="ticketsTotales | number" 
+                      icon="🎫">
+        </app-kpi-card>
+    </div>
+
+    <div class="charts-grid">
+      
+      <app-distribucion-vehiculo [data]="ticketsCerrados"></app-distribucion-vehiculo>
+      
+      <app-tendencia-ingresos [data]="ticketsCerrados"></app-tendencia-ingresos>
+
+    </div>
+    
+    <app-tabla-historial-tickets [data]="ticketsCerrados"></app-tabla-historial-tickets>
+    
+  </div>
+</div>

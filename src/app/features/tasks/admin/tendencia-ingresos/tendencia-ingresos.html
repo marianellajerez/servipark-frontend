@@ -1,0 +1,25 @@
+<div class="card chart-card">
+  <h3>Tendencia de Ingresos Diarios</h3>
+  
+  <div *ngIf="processedData.length > 0; else noData">
+    <div class="chart-placeholder">
+      <div class="chart-header">
+        <p class="chart-title">Gráfico de Tendencia (Líneas/Barras) - Ingresos vs. Fecha</p>
+        <p class="chart-subtitle">Total de puntos en la serie: {{ processedData.length }}</p>
+      </div>
+      <div class="chart-canvas">
+        <canvas
+          baseChart
+          [data]="lineChartData"
+          [type]="lineChartType"
+          [options]="lineChartOptions"
+          role="img"
+          aria-label="Tendencia de ingresos diarios"
+        ></canvas>
+      </div>
+    </div>
+  </div>
+  <ng-template #noData>
+    <p class="no-data-message">No hay datos suficientes para generar la tendencia de ingresos.</p>
+  </ng-template>
+</div>
