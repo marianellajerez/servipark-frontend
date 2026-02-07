@@ -1,0 +1,253 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-11-21T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2025.1.0",
+  "resources": [
+    {
+      "_id": "wrk_servipark",
+      "_type": "workspace",
+      "name": "ServiPark API",
+      "description": "Colección para probar los endpoints de ServiPark",
+      "scope": "lin"
+    },
+    {
+      "_id": "env_global",
+      "_type": "environment",
+      "parentId": "wrk_servipark",
+      "name": "Environment",
+      "data": {
+        "base_url": "http://localhost:8080",
+        "auth_token": ""
+      }
+    },
+    {
+      "_id": "fld_auth",
+      "_type": "request_group",
+      "parentId": "wrk_servipark",
+      "name": "01 - Auth",
+      "description": "Login y autenticación"
+    },
+    {
+      "_id": "fld_public",
+      "_type": "request_group",
+      "parentId": "wrk_servipark",
+      "name": "02 - Public",
+      "description": "Endpoints públicos (health, etc.)"
+    },
+    {
+      "_id": "fld_tarifas",
+      "_type": "request_group",
+      "parentId": "wrk_servipark",
+      "name": "03 - Tarifas",
+      "description": "Operaciones sobre tarifas"
+    },
+    {
+      "_id": "fld_tickets",
+      "_type": "request_group",
+      "parentId": "wrk_servipark",
+      "name": "04 - Tickets",
+      "description": "Registrar ingreso/salida, reportes"
+    },
+    {
+      "_id": "fld_tipos",
+      "_type": "request_group",
+      "parentId": "wrk_servipark",
+      "name": "05 - TiposVehiculo",
+      "description": "Tipos de vehículo"
+    },
+    {
+      "_id": "fld_usuarios",
+      "_type": "request_group",
+      "parentId": "wrk_servipark",
+      "name": "06 - Usuarios",
+      "description": "Operaciones sobre usuarios"
+    },
+    {
+      "_id": "fld_reports",
+      "_type": "request_group",
+      "parentId": "wrk_servipark",
+      "name": "07 - Reports",
+      "description": "Requests útiles para reportes y pruebas"
+    },
+
+    {
+      "_id": "req_login",
+      "_type": "request",
+      "parentId": "fld_auth",
+      "name": "Auth - Login",
+      "method": "POST",
+      "url": "{{ base_url }}/api/v1/auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"correo\": \"admin@servipark.com\",\n  \"contrasena\": \"Marianella123!\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+
+    {
+      "_id": "req_health",
+      "_type": "request",
+      "parentId": "fld_public",
+      "name": "Health - Check",
+      "method": "GET",
+      "url": "{{ base_url }}/api/health"
+    },
+
+    {
+      "_id": "req_roles",
+      "_type": "request",
+      "parentId": "fld_public",
+      "name": "Roles - List",
+      "method": "GET",
+      "url": "{{ base_url }}/api/v1/roles",
+      "headers": [ { "name": "Authorization", "value": "Bearer {{ response 'req_login' 'body.token' }}" } ]
+    },
+
+    {
+      "_id": "req_tarifas_all",
+      "_type": "request",
+      "parentId": "fld_tarifas",
+      "name": "Tarifas - Listar todas",
+      "method": "GET",
+      "url": "{{ base_url }}/api/v1/tarifas",
+      "headers": [ { "name": "Authorization", "value": "Bearer {{ response 'req_login' 'body.token' }}" } ]
+    },
+
+    {
+      "_id": "req_tarifas_get",
+      "_type": "request",
+      "parentId": "fld_tarifas",
+      "name": "Tarifas - Obtener por ID",
+      "method": "GET",
+      "url": "{{ base_url }}/api/v1/tarifas/{{ tarifa_id }}",
+      "description": "Define la variable tarifa_id en el request o usa la URL directamente",
+      "headers": [ { "name": "Authorization", "value": "Bearer {{ response 'req_login' 'body.token' }}" } ]
+    },
+
+    {
+      "_id": "req_tarifas_vigente",
+      "_type": "request",
+      "parentId": "fld_tarifas",
+      "name": "Tarifas - Vigente por Tipo",
+      "method": "GET",
+      "url": "{{ base_url }}/api/v1/tarifas/vigente/{{ idTipoVehiculo }}",
+      "parameters": [
+        { "name": "fecha", "value": "2025-11-21T10:00:00" }
+      ],
+      "headers": [ { "name": "Authorization", "value": "Bearer {{ response 'req_login' 'body.token' }}" } ]
+    },
+
+    {
+      "_id": "req_tarifas_create",
+      "_type": "request",
+      "parentId": "fld_tarifas",
+      "name": "Tarifas - Crear",
+      "method": "POST",
+      "url": "{{ base_url }}/api/v1/tarifas",
+      "headers": [ { "name": "Content-Type", "value": "application/json" }, { "name": "Authorization", "value": "Bearer {{ response 'req_login' 'body.token' }}" } ],
+      "body": { "mimeType": "application/json", "text": "{\n  \"valorPorMinuto\": 0.5,\n  \"idTipoVehiculo\": 2\n}" }
+    },
+
+    {
+      "_id": "req_ticket_ingreso",
+      "_type": "request",
+      "parentId": "fld_tickets",
+      "name": "Tickets - Registrar Ingreso",
+      "method": "POST",
+      "url": "{{ base_url }}/api/v1/tickets/ingreso",
+      "headers": [ { "name": "Content-Type", "value": "application/json" }, { "name": "Authorization", "value": "Bearer {{ response 'req_login' 'body.token' }}" } ],
+      "body": { "mimeType": "application/json", "text": "{\n  \"placa\": \"ABC123\",\n  \"idTipoVehiculo\": 2\n}" }
+    },
+
+    {
+      "_id": "req_ticket_salida",
+      "_type": "request",
+      "parentId": "fld_tickets",
+      "name": "Tickets - Registrar Salida",
+      "method": "PUT",
+      "url": "{{ base_url }}/api/v1/tickets/salida",
+      "headers": [ { "name": "Content-Type", "value": "application/json" }, { "name": "Authorization", "value": "Bearer {{ response \"req_login\" \"body.token\" }}" } ],
+      "body": { "mimeType": "application/json", "text": "{\n  \"placa\": \"ABC123\"\n}" }
+    },
+
+    {
+      "_id": "req_ticket_activo",
+      "_type": "request",
+      "parentId": "fld_tickets",
+      "name": "Tickets - Activo por Placa",
+      "method": "GET",
+      "url": "{{ base_url }}/api/v1/tickets/activo/ABC123",
+      "headers": [ { "name": "Authorization", "value": "Bearer {{ response \"req_login\" \"body.token\" }}" } ]
+    },
+
+    {
+      "_id": "req_ticket_historial",
+      "_type": "request",
+      "parentId": "fld_tickets",
+      "name": "Tickets - Historial por Placa",
+      "method": "GET",
+      "url": "{{ base_url }}/api/v1/tickets/historial/ABC123",
+      "headers": [ { "name": "Authorization", "value": "Bearer {{ response \"req_login\" \"body.token\" }}" } ]
+    },
+
+    {
+      "_id": "req_tickets_cerrados",
+      "_type": "request",
+      "parentId": "fld_reports",
+      "name": "Tickets - Cerrados (Reporte)",
+      "method": "GET",
+      "url": "{{ base_url }}/api/v1/tickets/cerrados",
+      "parameters": [
+        { "name": "fechaInicio", "value": "2025-11-01T00:00:00" },
+        { "name": "fechaFin", "value": "2025-11-21T23:59:59" }
+      ],
+      "headers": [ { "name": "Authorization", "value": "Bearer {{ response \"req_login\" \"body.token\" }}" } ]
+    },
+
+    {
+      "_id": "req_tipos_all",
+      "_type": "request",
+      "parentId": "fld_tipos",
+      "name": "TiposVehiculo - Listar",
+      "method": "GET",
+      "url": "{{ base_url }}/api/v1/tipos-vehiculo",
+      "headers": [ { "name": "Authorization", "value": "Bearer {{ response \"req_login\" \"body.token\" }}" } ]
+    },
+
+    {
+      "_id": "req_tipo_create",
+      "_type": "request",
+      "parentId": "fld_tipos",
+      "name": "TiposVehiculo - Crear con Tarifa",
+      "method": "POST",
+      "url": "{{ base_url }}/api/v1/tipos-vehiculo",
+      "headers": [ { "name": "Content-Type", "value": "application/json" }, { "name": "Authorization", "value": "Bearer {{ response \"req_login\" \"body.token\" }}" } ],
+      "body": { "mimeType": "application/json", "text": "{\n  \"nombre\": \"Carro\",\n  \"valorPorMinuto\": 0.5\n}" }
+    },
+
+    {
+      "_id": "req_usuarios_all",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Usuarios - Listar",
+      "method": "GET",
+      "url": "{{ base_url }}/api/v1/usuarios",
+      "headers": [ { "name": "Authorization", "value": "Bearer {{ response \"req_login\" \"body.token\" }}" } ]
+    },
+
+    {
+      "_id": "req_usuario_create",
+      "_type": "request",
+      "parentId": "fld_usuarios",
+      "name": "Usuarios - Crear",
+      "method": "POST",
+      "url": "{{ base_url }}/api/v1/usuarios",
+      "headers": [ { "name": "Content-Type", "value": "application/json" }, { "name": "Authorization", "value": "Bearer {{ response \"req_login\" \"body.token\" }}" } ],
+      "body": { "mimeType": "application/json", "text": "{\n  \"nombre\": \"Mariana\",\n  \"correo\": \"maria@example.com\",\n  \"contrasena\": \"secreto123\",\n  \"idRol\": 2\n}" }
+    }
+
+  ]
+}
